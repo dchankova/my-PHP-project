@@ -1,0 +1,165 @@
+
+
+
+
+-----------------Създайте таблица Books, която съдържа информация за вашите книги - ID , Име на книгата, Брой страници, Година на публикуване:
+
+
+
+CREATE TABLE `library`.`books` (
+`id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`name` VARCHAR( 255 ) NOT NULL ,
+`pages` INT NOT NULL ,
+`year` INT NOT NULL
+)
+
+--Добавате 10 записа в таблицата с примерни книги.
+--Пример за въвеждане на записи в таблицата:
+
+INSERT INTO `library`.`books` (
+`id` ,
+`name` ,
+`pages` ,
+`year`
+)
+VALUES (
+NULL , 'Middlemarch', '904', '1872'
+), (
+NULL , 'The Stories of Anton Chekhov', '450', '1860'
+
+--Напишете заявка, която ви дава имената на всички книги 
+SELECT name 
+FROM books;
+
+------Напишете заявка, която изтрива най – старата книгата
+
+--решение 1(не работи в MySQL,поради невазможността да се изпълни подзаявка при DELETE
+--същото се отнася и за UPDATE и т.н.) изпробвано е в DB2:
+DELETE FROM books
+where year=
+(
+select MIN(year)
+from books
+)
+--решение 2(Това е, което е позволено в MySQL,но не е изчерпателно защото изтрива само 1вия ред
+--а има възможност да са 1 най-малки години):
+
+DELETE FROM books
+ORDER BY year --сортира по години 
+LIMIT 1;--премахва 1вия кортеж
+
+--решение 3 - Съществува и 3то решение:
+--създаване на 2ра таблица, която е копие на 1вата ,но е нея се постави всичко без това, което искаме да изтрием.
+-- Първата таблица я изтриваме след това.
+
+----------------Напишете заявка, която променя годината на публикуване на всички книги, като добавя към текущата година още 10 години.
+
+UPDATE books
+SET year = year + 10;
+
+----------------Напишете заявка, която дава средната големина на книгите  
+
+SELECT avg( year )
+FROM books
+--------------------------------------------------------------------------------
+
+
+
+----------------Имплементирайте структура на база данни, където има информация за: Книги ( таблица ), Приятели ( таблица )
+--Информация за това на кои приятели, кои книги сме дали. Като на един приятел може да сме дали повече от една книга. Но една книга може да е дадена --само на един приятел.
+
+CREATE TABLE `library`.`friends` (
+`fr_id` INT NOT NULL AUTO_INCREMENT PRIMARY KEY ,
+`fr_name` VARCHAR( 255 ) NOT NULL ,
+)
+
+--добавяне на колона friend_id в таблица books
+
+ALTER TABLE books
+ADD friend_id INT;
+
+
+-- указване кой е foreign key-a в таблицата
+-- и къде сочи (в случая id на friends)
+-- така казваме че една книга може да е 
+-- само в един приятел
+
+ALTER TABLE books 
+ADD CONSTRAINT friend_fk 
+FOREIGN KEY (friend_id) 
+REFERENCES friends(fr_id);
+
+-- запълваме данните за friend_id 
+--пример за 1 запис
+
+UPDATE `library`.`books` SET `friend_id` = '12' WHERE `books`.`id` =4;
+
+	
+--------------Направете следните заявки:
+--Заявка показваща всяка книга в кой приятел се намира. Показвайки само книгите, които са дадени
+	
+SELECT name, fr_name
+FROM books JOIN friends ON friend_id = fr_id;
+
+--Заявка показваща всяка книга в кой приятел се намира. Показвайки само книгите, които не са дадени
+	
+SELECT name
+FROM books
+WHERE friend_id IS NULL;
+
+--Заявка показваща всички книги. Информация дали са дадени на някой приятел и NULL запис ако книгата не е дадена на приятел.
+
+-- Заявка показваща всички книги. Информация дали са 
+-- дадени на някой приятел и NULL запис ако книгата 
+-- не е дадена на приятел.
+
+SELECT name, fr_name
+FROM books LEFT JOIN friends ON friend_id = fr_id;
+
+
+-- изтриваме foreign key-a след като сме премахнали връзката между таблиците
+
+ALTER TABLE books 
+DROP friend_id ;
+
+
+------------------------------------------------------------------------------------
+
+
+--------------------Променете вече създадената база данни, така, че да съдържа информация за приятели, книги и информация за това кой приятел е чел коя книга.
+--Един приятел може да е прочел много книги, една книга може да бъде прочетена от много приятели.
+
+--Създаваме таблица, която съдържа информация за книгите, които са заемани 
+
+CREATE TABLE lent_books(
+B_Id integer,
+F_Id integer,
+FOREIGN KEY ( B_Id ) REFERENCES books( id ) ,
+FOREIGN KEY ( F_Id ) REFERENCES friends( fr_id )
+);
+
+--добавяме записи в таблицата lent_book
+
+--Направете заяка, която показва данни за приятел прочел най – много книги.
+	
+SELECT fr_id, fr_name, COUNT( F_Id ) AS 'NUMBER_BOOKS'
+FROM friends JOIN lent_book ON fr_id = F_Id
+GROUP BY fr_id
+HAVING COUNT( F_Id ) >= ALL (
+	SELECT COUNT( lb.F_Id )
+	FROM lent_book AS lb
+	GROUP BY lb.F_Id
+)
+ 
+ --Направете заявка, която показва коя книга е била прочетена най – малко пъти.
+
+СELECT name, COUNT( B_Id ) AS 'TIMES_READ'
+FROM books
+JOIN lent_book ON id = B_Id
+GROUP BY id
+HAVING COUNT( B_Id ) <= ALL (
+	SELECT COUNT( lb.B_Id)
+	FROM lent_book AS lb
+	GROUP BY lb.B_Id
+	)
+
