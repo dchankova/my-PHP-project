@@ -1,0 +1,66 @@
+body {
+	background:#008080;
+	margin:0px;
+	padding:0px;
+}
+h1 {
+font-family:Georgia,Serif;
+	color:#01014f;
+}
+a
+{
+	color:#DC143C;
+	font-family:Georgia,serif;
+	font-size:13px;
+
+	
+	text-align:center;
+	padding:6px;
+	text-decoration:none;
+}
+#container {
+width:950px;
+	min-height:600px;
+	margin:10px auto 10px auto;
+	padding:20px;
+	background:#FFE4C4;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border: 3px solid;
+	-moz-border-bottom-colors: #b4b4b4 #cccccc #979797 #d0d0d0;
+	-moz-border-top-colors: #b4b4b4 #cccccc #979797 #d0d0d0;
+	-moz-border-left-colors: #b4b4b4 #cccccc #979797 #d0d0d0;
+	-moz-border-right-colors: #b4b4b4 #cccccc #979797 #d0d0d0;
+}
+#header {
+width:930px;
+	height:150px;
+	padding:10px;
+	background-color:#f7f7f7;
+}
+#content
+{
+	width:950px;
+	min-height:500px;
+	background:#FFE4E1;
+
+	padding:40px 0 0 0;
+	margin:0px;
+	
+	font-family:Arial, sans-serif;
+
+}
+#login {
+margin:60px auto 60px auto;
+
+}
+#footer {
+width:950px;
+	height:40px;
+	position:relative;
+	clear: both;
+	background-color:#f7f7f7;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	border-top: 3px solid #eee;
+}
