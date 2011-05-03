@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<f_accounts>
+<f_account>
+<nickname>adminka </nickname>
+<password>e10adc3949ba59abbe56e057f20f883e</password>
+<name>adminka</name>
+<age>18</age>
+<eyes_color>blue</eyes_color>
+<hair_color>rusa</hair_color>
+<bra_size>120</bra_size>
+<weight>56</weight>
+<height>185</height>
+</f_account>
+<f_account>
+<nickname>mimi</nickname>
+<password>508df4cb2f4d8f80519256258cfb975f</password>
+<name>mimi</name>
+<age>12</age>
+<eyes_color>blue</eyes_color>
+<hair_color>zelena</hair_color>
+<bra_size>123</bra_size>
+<weight>45</weight>
+<height>18</height>
+</f_account>
+<f_account><nickname>mekichka</nickname><password>e10adc3949ba59abbe56e057f20f883e</password><age>23</age><eyes_color>green</eyes_color><hair_color>nqma</hair_color><bra_size>78</bra_size><weight>45</weight><height>167</height></f_account><name>Mekichka</name></f_accounts>

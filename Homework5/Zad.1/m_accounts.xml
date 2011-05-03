@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<m_accounts>
+<m_account>
+<nickname>admin</nickname>
+<password>e10adc3949ba59abbe56e057f20f883e</password>
+<name>admin</name>
+<age>15</age>
+<salary>40</salary>
+<properties> a:1:{i:0;s:3:"car";} </properties>
+<height>189</height>
+</m_account>
+<m_account>
+<nickname>Bogatasha</nickname>
+<password>e10adc3949ba59abbe56e057f20f883e</password>
+<name>Marin Kamburov</name>
+<age>98</age>
+<salary>300000</salary>
+<properties>a:2:{i:0;s:3:"car";i:1;s:5:"house";}</properties>
+<height>165</height>
+</m_account>
+</m_accounts>
